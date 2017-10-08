@@ -1,0 +1,36 @@
+#!/usr/bin/python3
+
+from sys import stdin
+from itertools import repeat
+
+
+def merge(decks):
+    result = []
+    while decks:
+        min = decks[0][0][0]
+        ind, count = 0, 0
+        for deck in decks:
+            if deck[0][0] < min:
+                min = deck[0][0]
+                ind = count
+            count += 1
+        result.append(decks[ind][0])
+        if len(decks[ind]) > 1:
+            del decks[ind][0]
+        else:
+            del decks[ind]
+
+
+def main():
+    # Read input.
+    decks = []
+    for line in stdin:
+        (index, csv) = line.strip().split(':')
+        deck = list(zip(map(int, csv.split(',')), repeat(index)))
+        decks.append(deck)
+    # Merge the decks and print result.
+    print(merge(decks))
+
+
+if __name__ == "__main__":
+    main()
