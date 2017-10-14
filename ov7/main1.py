@@ -1,6 +1,6 @@
 from sys import stdin
 
-Inf = 1000000000
+INF = 1000000000
 
 
 def min_coins_greedy(coins, value):
@@ -20,8 +20,20 @@ def min_coins_greedy(coins, value):
 
 
 def min_coins_dynamic(coins, value):
-    #Lær dynamisk
-    pass
+    size = len(coins)
+    subresults = [INF]*(value+1)
+
+    subresults[0] = 0
+
+    for i in range(1, value+1):
+        for j in range(size):
+            if coins[j] <= i:
+                sub_res = subresults[i-coins[j]]
+                if sub_res != INF and sub_res + 1 < subresults[i]: #y?
+                    subresults[i] = sub_res + 1
+    return subresults[value]
+
+
 
 def can_use_greedy(coins):
     for i in range(len(coins)-1):
